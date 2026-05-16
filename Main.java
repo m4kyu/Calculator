@@ -1,5 +1,5 @@
+import java.util.List;
 import java.awt.*;
-
 import javax.swing.*;
 
 public class Main {
@@ -78,22 +78,70 @@ public class Main {
     inputField.setText("");
   }
 
-  private void handleButton(String action) {
-    switch (action) {
+  private void handleButton(String text) {
+    switch (text) {
       case "CE":
         clear();
         break;
+      case "/":
+      case "*":
+      case "-":
+      case "+":
+        handleOperator(text);
+        break;
+      case "=":
+        calculate();
+        break;
       default:
-        handleNum(Integer.parseInt(action));
+        handleNum(Integer.parseInt(text));
     }
   }
 
   private void handleNum(int num) {
-    if (num == 0 && inputField.getText().isEmpty()) {
+    String text = inputField.getText();
+    if (num == 0) {
+      if (text.isEmpty() || lastSpec(text)) {
+        return;
+      }
+    }
+
+    inputField.setText(text + num);
+  }
+
+  private void handleOperator(String operator) {
+    String text = inputField.getText();
+    if (text.isEmpty()) {
       return;
     }
 
-    inputField.setText(inputField.getText() + num);
+    if (lastSpec(text)) {
+      return;
+    }
+
+    inputField.setText(text + operator);
   }
 
+  private boolean lastSpec(String text) {
+    char last = text.charAt(text.length() - 1);
+    if (last == '/' || last == '*' || last == '-' || last == '+') {
+      return true;
+    }
+
+    return false;
+  }
+
+  private void calculate() {
+    if (inputField.getText().isEmpty()) {
+      return;
+    }
+
+    Lexer lexer = new Lexer();
+    lexer.parse(inputField.getText());
+
+    List<Token> tokens = lexer.getTokens();
+
+    for (Token token : tokens) {
+      System.out.println(token);
+    }
+  }
 }
