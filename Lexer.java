@@ -6,30 +6,21 @@ public class Lexer {
   public void parse(String text) {
     tokens = new ArrayList<>();
 
-    int start = 0;
-    boolean isNum = false;
     for (int i = 0; i < text.length(); i++) {
       if (Character.isDigit(text.charAt(i))) {
-        if (!isNum) {
-          isNum = true;
-          start = i;
+        StringBuilder sb = new StringBuilder();
+
+        while (i < text.length() && Character.isDigit(text.charAt(i))) {
+          sb.append(text.charAt(i));
+          i++;
         }
 
+        tokens.add(new Token(Integer.parseInt(sb.toString()), TokenType.OPERAND));
+        i--;
         continue;
       }
 
-      if (isNum) {
-        isNum = false;
-        String num = text.substring(start, i);
-        tokens.add(new Token(Integer.parseInt(num), TokenType.OPERAND));
-      }
-
       tokens.add(new Token(text.charAt(i), TokenType.OPERATOR));
-    }
-
-    if (isNum) {
-      String num = text.substring(start, text.length());
-      tokens.add(new Token(Integer.parseInt(num), TokenType.OPERAND));
     }
   }
 

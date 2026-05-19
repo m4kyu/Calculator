@@ -139,9 +139,12 @@ public class Main {
     lexer.parse(inputField.getText());
 
     List<Token> tokens = lexer.getTokens();
+    AST ast = new AST();
+    ast.buildTree(tokens);
+    Expresion head = ast.getTree();
 
-    for (Token token : tokens) {
-      System.out.println(token);
-    }
+    int result = Evaluator.evaluate(head);
+
+    inputField.setText(inputField.getText() + "=" + String.valueOf(result));
   }
 }
