@@ -1,3 +1,5 @@
+package com.m4kyu.lexer;
+
 import java.util.*;
 
 public class Lexer {

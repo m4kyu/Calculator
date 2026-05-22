@@ -1,3 +1,7 @@
+package com.m4kyu.ast;
+
+import com.m4kyu.lexer.*;
+
 public class Expresion {
   private Token token;
   private Expresion left;

@@ -1,3 +1,4 @@
+package com.m4kyu.lexer;
 
 public class Token {
   private char operator;

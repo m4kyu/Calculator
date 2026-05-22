@@ -1,6 +1,13 @@
+package com.m4kyu;
+
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
+
+import com.m4kyu.*;
+import com.m4kyu.lexer.*;
+import com.m4kyu.ast.*;
+import com.m4kyu.evaluator.*;
 
 public class Main {
   private JFrame frame;
